@@ -47,7 +47,7 @@ public class PersonController {
 
     // --- METHODS PUT ----
     @PutMapping( path = "{id}")
-    public boolean updatePerson( @PathVariable("id") int id, @Valid @NonNull @RequestBody Person person){
+    public boolean updatePerson( @PathVariable("id") Integer id, @Valid @NonNull @RequestBody Person person){
         return personService.updatePerson( id , person);
     }
 

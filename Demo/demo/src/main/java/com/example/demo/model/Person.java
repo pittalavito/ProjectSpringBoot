@@ -8,7 +8,7 @@ import java.util.UUID;
 @Table(name ="person")
 public class Person {
     @Id
-    private int id;
+    private Integer id;
     @NotBlank @NotNull
     private String name;
     @NotBlank @NotNull
@@ -28,7 +28,7 @@ public class Person {
     }
 
     // --- METHODS ---
-    public int getId(){
+    public Integer getId(){
         return id;
     }
     public String getName(){

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -32,18 +33,18 @@ public class PersonService {
          return personRepository.save( person ) != null;
     }
 
-    public boolean deletePerson(int id){
-         Person p = personRepository.findById(id);
-         if( p != null) {
-             personRepository.delete(p);
+    public boolean deletePerson(Integer id){
+         Optional<Person> p = personRepository.findById( id );
+         if( p.isPresent()) {
+             personRepository.delete(p.get());
              return true;
          }
          return false;
     }
 
-    public boolean updatePerson(int id , Person person){
-        Person p = personRepository.findById(id);
-        if( p != null) return insertPerson( person);
+    public boolean updatePerson(Integer id , Person person){
+        Optional<Person> p = personRepository.findById(id);
+        if( p.isPresent()) return insertPerson( person );
         return false;
     }
 

@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository("Person")
-public interface PersonRepository extends JpaRepository<Person, UUID> {
-    Person findById( int id );
+public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     List<Person> findByNameAndSurname(String name, String surname);
 
