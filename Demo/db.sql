@@ -3,34 +3,33 @@ CREATE DATABASE SPRINGDB;
 USE SPRINGDB;
 
 CREATE TABLE JOBS(
-    id integer primary key auto_increment,
-    name varchar(30) not null
+    id varchar(30) primary key 
 )Engine="InnoDB";
 
 CREATE TABLE PERSON(
     id       integer      primary key auto_increment ,
     name     varchar(30)  not null,
     surname  varchar(30)  not null,
-    job      integer      ,
+    job      varchar(30)          ,
     foreign key( job ) references jobs(id) on update cascade on delete set null
 )Engine="InnoDB";
 
-;INSERT INTO JOBS( name , id)
+;INSERT INTO JOBS( id )
     VALUES
-    ("mason" , 1),
-    ("computer scientist" , 2),
-    ("lawyer" , 3),
-    ("doctor" , 4)
+    ("mason" ),
+    ("computer scientist"),
+    ("lawyer" ),
+    ("doctor" )
 ;
 
 INSERT INTO PERSON (name ,surname, job)
     VALUES            
-    ("mario"  , "rossi"   , 4),
-    ("mario"   , "rossi"  , 1),
-    ("salvo"  , "bianchi" , 2),
-    ("andrea" , "verdi"   , 3),
-    ("mara"   , "viola"   , 1),
-    ("franca" ,"franchi"  , 2)
+    ("mario"  , "rossi"   , "mason"),
+    ("mario"   , "rossi"  , "mason"),
+    ("salvo"  , "bianchi" , "lawyer"),
+    ("andrea" , "verdi"   , "doctor"),
+    ("mara"   , "viola"   , "doctor"),
+    ("franca" ,"franchi"  , "computer scientist")
 ;
 
 

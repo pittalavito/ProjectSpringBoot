@@ -10,13 +10,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name ="jobs")
 public class Job {
-    @Id
-    private int id;
-    @NotBlank @NotNull
-    private String name;
+    @Id @NotBlank @NotNull
+    private String id;
     // --- CONSTRUCTORS ---
 
     // --- METHODS ---
-    public int getId(){return id;}
-    public String getName(){return  name;}
+    public String getId(){return  id;}
 }

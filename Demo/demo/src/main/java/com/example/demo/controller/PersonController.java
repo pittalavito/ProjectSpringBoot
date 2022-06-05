@@ -32,6 +32,16 @@ public class PersonController {
         return personService.getJobByPerson( name ,surname);
     }
 
+    @GetMapping( path = "{letter}")
+    public String getNamesByChar( @PathVariable("letter") String letter ){
+        boolean c1 = letter.charAt(0) >= 'a' && letter.charAt(0) <= 'z';
+        boolean c2 = letter.charAt(0) >= 'A' && letter.charAt(0) <= 'Z';
+
+        if( letter.length() != 1  || c1 == c2 )return "Error, input non valido";
+
+        return personService.getNameByChar( letter );
+    }
+
     // --- METHODS POST ---
     @PostMapping
     public boolean insertPerson(@Valid @NonNull @RequestBody Person person){
@@ -40,8 +50,7 @@ public class PersonController {
 
     // --- METHODS DELETE ---
     @DeleteMapping( path = "{id}")
-    public boolean
-    deletePerson( @PathVariable("id") int id ){
+    public boolean deletePerson( @PathVariable("id") int id ){
         return personService.deletePerson(id);
     }
 

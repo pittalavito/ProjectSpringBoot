@@ -14,7 +14,7 @@ public class Person {
     @NotBlank @NotNull
     private String surname;
 
-    private int job;
+    private String job;
 
     // --- CONSTRUCTORS ---
 
@@ -37,7 +37,7 @@ public class Person {
     public String getSurname(){
         return  surname;
     }
-    public int getJob(){
+    public String getJob(){
         return job;
     }
 }

@@ -48,6 +48,20 @@ public class PersonService {
         return false;
     }
 
+    public String getNameByChar( String letter ){
+        String result ="";
+        List<Person> listPerson = personRepository.findAll();
+
+        for( Person p : listPerson) {
+            if (p.getName().toLowerCase().charAt(0) == letter.toLowerCase().charAt(0)) {
+                result+= p.getName() + ",";
+            }
+        }
+        if( result.equals("") )return "Nessun record trovato";
+
+        return  result.substring(0, result.length()-1);
+    }
+
     public List<Job> getJobByPerson( String name , String surname){
         List<Person> listPerson = personRepository.findByNameAndSurname(name , surname);
         if(!listPerson.isEmpty()){
@@ -56,7 +70,7 @@ public class PersonService {
 
             for(Person p : listPerson){
                 for(Job j : listJob){
-                    if(p.getJob() == (j.getId())) {
+                    if(p.getJob().equals( j.getId()) ) {
                         listReturn.add(j);
                         break;
                     }

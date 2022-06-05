@@ -20,4 +20,24 @@ public class JobService {
         return jobRepository.findAll();
     }
 
+    public boolean insertJob( Job job){
+        if(jobRepository.findById( job.getId()).isEmpty() ) return  jobRepository.save( job ) != null;
+        return false;
+    }
+
+    public boolean deleteJob( Job job){
+        if(jobRepository.findById( job.getId()).isPresent() ){
+            jobRepository.delete(( job ));
+            return true;
+        }
+        return false;
+    }
+    public boolean updateJob( Job job){
+        if( jobRepository.findById(job.getId()).isPresent() ){
+            jobRepository.save( job );
+            return true;
+        }
+        return false;
+    }
+
 }
