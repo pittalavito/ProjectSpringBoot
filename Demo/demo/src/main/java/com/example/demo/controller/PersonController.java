@@ -17,13 +17,13 @@ import java.util.List;
 public class PersonController {
 
     private final PersonService personService;
-    // --- CONSTRUCTOR ---
+    // --- CONSTRUCTOR -------------------------------------------------------------------------------
     @Autowired
     public PersonController( PersonService personService){
         this.personService = personService;
     }
 
-    // --- METHODS GET---
+    // --- METHODS GET ---------------------------------------------------------------------------------
     @GetMapping("")
     public List<Person> getAllPeople(){
         return personService.getAllPeople();
@@ -34,34 +34,21 @@ public class PersonController {
         return personService.getJobByPerson( name ,surname);
     }
 
-    /*@GetMapping( path = "{letter}")// sistemare !! nel controller non va implementata la logica
-    public String getNamesByChar( @PathVariable("letter") String letter ){
-        boolean c1 = letter.charAt(0) >= 'a' && letter.charAt(0) <= 'z';
-        boolean c2 = letter.charAt(0) >= 'A' && letter.charAt(0) <= 'Z';
-
-
-        if (letter.length() != 1 || c1 == c2)return "Error, input non valido";
-
-        return personService.getNameByChar( letter );
-    }*/
-
-    // --- METHODS POST ---
+    // --- METHODS POST ------------------------------------------------------------------------------
     @PostMapping
     public boolean insertPerson(@Valid @NonNull @RequestBody Person person){
         return personService.insertPerson( person );
     }
 
-    // --- METHODS DELETE ---
+    // --- METHODS DELETE -------------------------------------------------------------------------------
     @DeleteMapping( path = "{id}")
-    public boolean deletePerson( @PathVariable("id") int id ){
+    public boolean deletePerson( @PathVariable("id") Long id ){
         return personService.deletePerson(id);
     }
 
-    // --- METHODS PUT ----
-    @PutMapping( path = "{id}")
-    public boolean updatePerson( @PathVariable("id") Integer id, @Valid @NonNull @RequestBody Person person){
-        return personService.updatePerson( id , person);
+    // --- METHODS PUT -------------------------------------------------------------------------------------
+    @PutMapping
+    public boolean updatePerson( @Valid @NonNull @RequestBody Person person){
+        return personService.updatePerson( person );
     }
-
-
 }

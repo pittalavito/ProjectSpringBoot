@@ -1,4 +1,7 @@
 package com.example.demo.model;
+import jdk.jfr.Unsigned;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,13 +22,6 @@ public class Person {
     private Job job;
 
     public Person() {
-    }
-
-    public Person(Person person ){
-        //id viene incrementato direttamente dal database
-        this.name    = person.name;
-        this.surname = person.surname;;
-        this.job     = person.job;
     }
 
     public long getId() {

@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,13 +15,17 @@ public class Job {
     private String name;
 
     @OneToMany(mappedBy = "job")
+
     private Set<Person> persons;
 
-    // --- CONSTRUCTOR ---
+    // --- CONSTRUCTOR --------------------------------------------------
     public Job() {
     }
+    public  Job( @JsonProperty("name") String name){
+        this.name = name;
+    }
 
-    // --- METHODS ---
+    // --- METHODS ------------------------------------------------------
     public long getId() {
         return id;
     }

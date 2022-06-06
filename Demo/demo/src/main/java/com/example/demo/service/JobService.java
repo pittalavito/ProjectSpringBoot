@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobService {
@@ -20,24 +21,38 @@ public class JobService {
         return jobRepository.findAll();
     }
 
-    public boolean insertJob( Job job){
-        if(jobRepository.findById( job.getId()).isEmpty() ) return  jobRepository.save( job ) != null;
-        return false;
+    public boolean insertJob( String name ){
+        Optional<Job> jobReturn = jobRepository.findByName( name );
+
+        if( jobReturn.isPresent())return false;
+
+        jobRepository.save( new Job( name ) );
+        return true;
     }
 
-    public boolean deleteJob( Job job){
-        if(jobRepository.findById( job.getId()).isPresent() ){
-            jobRepository.delete(( job ));
-            return true;
-        }
-        return false;
-    }
-    public boolean updateJob( Job job){
-        if( jobRepository.findById(job.getId()).isPresent() ){
-            jobRepository.save( job );
+    public boolean deleteJob( Long id ){
+        Optional<Job> jobReturn = jobRepository.findById( id );
+        if(jobReturn.isPresent()){
+            jobRepository.deleteById(id);
             return true;
         }
         return false;
     }
 
+    public boolean updateJob( Job job ){
+        try{
+            Optional<Job> jobById , jobByUniqueName;
+
+            jobByUniqueName = jobRepository.findByName(job.getName());
+            if( jobByUniqueName.isPresent())throw new Exception( );
+
+            jobById = jobRepository.findById(job.getId());
+            if( jobById.isEmpty())throw new Exception();
+
+        }catch (Exception e){
+            return false;
+        }
+        jobRepository.save( job );
+        return true;
+    }
 }
