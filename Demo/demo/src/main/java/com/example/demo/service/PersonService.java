@@ -48,7 +48,7 @@ public class PersonService {
         return false;
     }
 
-    public String getNameByChar( String letter ){
+    /*public String getNameByChar( String letter ){
         String result ="";
         List<Person> listPerson = personRepository.findAll();
 
@@ -60,9 +60,9 @@ public class PersonService {
         if( result.equals("") )return "Nessun record trovato";
 
         return  result.substring(0, result.length()-1);
-    }
+    }*/
 
-    public List<Job> getJobByPerson( String name , String surname){
+   /* public List<Job> getJobByPerson( String name , String surname){
         List<Person> listPerson = personRepository.findByNameAndSurname(name , surname);
         if(!listPerson.isEmpty()){
             List<Job> listJob    = jobRepository.findAll();
@@ -70,7 +70,7 @@ public class PersonService {
 
             for(Person p : listPerson){
                 for(Job j : listJob){
-                    if(p.getJob().equals( j.getId()) ) {
+                    if(p.getJob() == j.getId() ) {
                         listReturn.add(j);
                         break;
                     }
@@ -79,8 +79,21 @@ public class PersonService {
             return  listReturn;
         }else return null;
     }
+    */
 
-    /*public List<Job> getJobByPerson( String name , String surname){
+    /*
+    public List<Job> getJobByPerson( String name , String surname){
         return personRepository.findJobByPerson( name , surname);
     }*/
+
+    public List<Job> getJobByPerson( String name , String surname){
+        List<Person> listPerson = personRepository.findByNameAndSurname(name , surname);
+        List<Job> listReturn;
+        if( !listPerson.isEmpty()){
+            listReturn = new ArrayList<Job>();
+            for( Person p: listPerson)listReturn.add( p.getJob());
+            return listReturn;
+        }
+        return null;
+    }
 }

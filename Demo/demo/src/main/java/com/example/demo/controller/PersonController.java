@@ -4,8 +4,10 @@ import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,19 +30,20 @@ public class PersonController {
     }
 
     @GetMapping( path = "{name}/{surname}")
-    public List<Job> getJobByPersonQuerySql(@PathVariable("name") String name , @PathVariable("surname") String surname){
+    public List<Job> getJobByPerson(@PathVariable("name") String name , @PathVariable("surname") String surname){
         return personService.getJobByPerson( name ,surname);
     }
 
-    @GetMapping( path = "{letter}")
+    /*@GetMapping( path = "{letter}")// sistemare !! nel controller non va implementata la logica
     public String getNamesByChar( @PathVariable("letter") String letter ){
         boolean c1 = letter.charAt(0) >= 'a' && letter.charAt(0) <= 'z';
         boolean c2 = letter.charAt(0) >= 'A' && letter.charAt(0) <= 'Z';
 
-        if( letter.length() != 1  || c1 == c2 )return "Error, input non valido";
+
+        if (letter.length() != 1 || c1 == c2)return "Error, input non valido";
 
         return personService.getNameByChar( letter );
-    }
+    }*/
 
     // --- METHODS POST ---
     @PostMapping

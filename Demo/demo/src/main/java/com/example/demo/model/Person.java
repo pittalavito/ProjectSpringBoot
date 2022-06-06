@@ -1,25 +1,26 @@
 package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
+
 @Entity
 @Table(name ="person")
 public class Person {
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @NotBlank @NotNull
     private String name;
     @NotBlank @NotNull
     private String surname;
 
-    private String job;
-
-    // --- CONSTRUCTORS ---
+    @ManyToOne
+    @JoinColumn(name = "id_job" )
+    private Job job;
 
     public Person() {
     }
+
     public Person(Person person ){
         //id viene incrementato direttamente dal database
         this.name    = person.name;
@@ -27,17 +28,35 @@ public class Person {
         this.job     = person.job;
     }
 
-    // --- METHODS ---
-    public Integer getId(){
+    public long getId() {
         return id;
     }
-    public String getName(){
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
         return name;
     }
-    public String getSurname(){
-        return  surname;
+
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getJob(){
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Job getJob() {
         return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
 }
