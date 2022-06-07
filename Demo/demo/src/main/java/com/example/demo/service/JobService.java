@@ -16,7 +16,7 @@ public class JobService {
         this.jobRepository = jobRepository;
     }
 
-    // --- METHODS ---
+    // --- METHODS --------------------------------------------------
     public List<Job> getAllJobS() {
         return jobRepository.findAll();
     }
@@ -41,15 +41,15 @@ public class JobService {
 
     public boolean updateJob( Job job ){
         try{
-            Optional<Job> jobById , jobByUniqueName;
+            Optional<Job> jobById, jobByUniqueName;
 
             jobByUniqueName = jobRepository.findByName(job.getName());
-            if( jobByUniqueName.isPresent())throw new Exception( );
+            if(jobByUniqueName.isPresent()) throw new Exception();
 
             jobById = jobRepository.findById(job.getId());
-            if( jobById.isEmpty())throw new Exception();
+            if(jobById.isEmpty()) throw new Exception();
 
-        }catch (Exception e){
+        } catch (Exception e){
             return false;
         }
         jobRepository.save( job );

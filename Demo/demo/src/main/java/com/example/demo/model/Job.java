@@ -1,8 +1,5 @@
 package com.example.demo.model;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import java.util.Set;
 

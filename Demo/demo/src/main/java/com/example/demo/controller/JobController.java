@@ -4,10 +4,8 @@ import com.example.demo.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
 import java.util.List;
 
 @RestController
@@ -19,7 +17,8 @@ public class JobController {
     public JobController( JobService jobService){
         this.jobService = jobService;
     }
-    // --- METHODS ---
+
+    // --- METHODS -------------------
     @GetMapping("")
     public List<Job> getAllJobs(){
         return jobService.getAllJobS();
