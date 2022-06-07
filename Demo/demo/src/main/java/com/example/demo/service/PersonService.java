@@ -3,9 +3,8 @@ import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMessage;
 import org.springframework.stereotype.Service;
-
-import java.net.HttpRetryException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,21 +55,22 @@ public class PersonService {
         return null;
     }
 
-    public String getNameByChar( String letter ){
+    public String getNameByChar(String letter){
 
         List<Person> personReturn;
         String stringReturn ="";
-        try{
-            String pattern="[a-z | A-Z]";
-            if(!letter.matches( pattern)) throw new Exception("input non valid");
 
-            personReturn = personRepository.findByNameStartsWithIgnoreCase( letter);
-            if( personReturn.isEmpty() )throw new Exception("nessun risultato trovate");
+        try{
+            if(!letter.matches("[a-z | A-Z]")) throw new Exception("input non valid");
+
+            personReturn = personRepository.findByNameStartsWithIgnoreCase(letter);
+
+            if( personReturn.isEmpty() )throw new Exception("nessun risultato trovato");
 
             for( Person p : personReturn) stringReturn+= p.getName() +",";
 
         }catch (Exception e){
-            return e.toString();
+            return e.getMessage();
         }
 
         return stringReturn.substring(0 ,stringReturn.length() -1);
