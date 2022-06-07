@@ -1,6 +1,4 @@
 package com.example.demo.model;
-import jdk.jfr.Unsigned;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

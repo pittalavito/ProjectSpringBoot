@@ -4,10 +4,8 @@ import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,6 +32,10 @@ public class PersonController {
         return personService.getJobByPerson( name ,surname);
     }
 
+    @GetMapping("{letter}")
+    public  String getNameByChar ( @PathVariable("letter") String letter){
+        return personService.getNameByChar( letter );
+    }
     // --- METHODS POST ------------------------------------------------------------------------------
     @PostMapping
     public boolean insertPerson(@Valid @NonNull @RequestBody Person person){
