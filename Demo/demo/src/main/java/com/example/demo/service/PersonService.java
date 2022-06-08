@@ -1,6 +1,7 @@
 package com.example.demo.service;
 import com.example.demo.model.Job;
 import com.example.demo.model.Person;
+import com.example.demo.myMenagementException.MyHttpException;
 import com.example.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,26 +63,16 @@ public class PersonService {
         List<Person> personReturn;
         String stringReturn="";
 
-        try {
+        if (!letter.matches("[a-z | A-Z]")) {
+            throw new MyHttpException("input non valido" , HttpStatus.BAD_REQUEST);
+        }
 
-            if (!letter.matches("[a-z | A-Z]")) {
-                stringReturn = "input non valido";
-                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
-            }
-
-            personReturn = personRepository.findByNameStartsWithIgnoreCase(letter);
-            if (personReturn.isEmpty()) {
-                stringReturn = "nessun risultato trovato";
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-            }
-
-        }catch( HttpClientErrorException e){
-
-            return ResponseEntity.status( e.getStatusCode()).body(stringReturn);
+        personReturn = personRepository.findByNameStartsWithIgnoreCase(letter);
+        if (personReturn.isEmpty()) {
+            throw new MyHttpException("nessun risultato trovato", HttpStatus.NOT_FOUND);
         }
 
         for (Person p : personReturn) stringReturn += p.getName() + ",";
-
         return ResponseEntity.status( HttpStatus.OK).body(stringReturn);
     }
 }
