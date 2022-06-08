@@ -3,9 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.service.PersonService;
-import com.example.demo.serviceutility.MyServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +35,7 @@ public class PersonController {
 
     @GetMapping("{letter}")
     public ResponseEntity<String> getNameByChar (@PathVariable("letter") String letter){
-        MyServiceResponse<String> serviceResponse = personService.getNameByChar( letter );
-        return ResponseEntity.status( serviceResponse.codHttp ).body( serviceResponse.body );
+        return personService.getNameByChar(letter);
     }
 
     // --- METHODS POST ------------------------------------------------------------------------------

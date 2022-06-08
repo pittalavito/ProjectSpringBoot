@@ -2,11 +2,12 @@ package com.example.demo.service;
 import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
-import com.example.demo.serviceutility.MyServiceException;
-import com.example.demo.serviceutility.MyServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,41 +58,30 @@ public class PersonService {
         return null;
     }
 
-    public MyServiceResponse<String> getNameByChar(String letter){
+    public ResponseEntity<String> getNameByChar(String letter){
         List<Person> personReturn;
-        MyServiceResponse<String> serviceResponse = new MyServiceResponse<String>();
+        String stringReturn="";
 
-        try{
-            if(!letter.matches("[a-z | A-Z]")){
-                throw new MyServiceException( "NotValidLetter" );
+        try {
+
+            if (!letter.matches("[a-z | A-Z]")) {
+                stringReturn = "input non valido";
+                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
             }
 
             personReturn = personRepository.findByNameStartsWithIgnoreCase(letter);
-            if( personReturn.isEmpty() ){
-                throw new MyServiceException( "personReturnIsEmpty" );
+            if (personReturn.isEmpty()) {
+                stringReturn = "nessun risultato trovato";
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
             }
 
-            if( true ){
-                serviceResponse.body = "";
-                for (Person p : personReturn) serviceResponse.body += p.getName() + ",";
-                throw new MyServiceException( "default" );
-            }
+        }catch( HttpClientErrorException e){
 
-        }catch (Exception e){
-            switch (e.getMessage()){
-                case "NotValidLetter":
-                    serviceResponse.codHttp = 404;
-                    serviceResponse.body = "input non valido";
-                    break;
-                case "personReturnIsEmpty":
-                    serviceResponse.codHttp = 400;
-                    serviceResponse.body = "nessun risultato trovato";
-                    break;
-                default:
-                    serviceResponse.codHttp = 200;
-                    break;
-            }
+            return ResponseEntity.status( e.getStatusCode()).body(stringReturn);
         }
-        return serviceResponse;
+
+        for (Person p : personReturn) stringReturn += p.getName() + ",";
+
+        return ResponseEntity.status( HttpStatus.OK).body(stringReturn);
     }
 }
