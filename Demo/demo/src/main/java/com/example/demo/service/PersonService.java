@@ -2,6 +2,8 @@ package com.example.demo.service;
 import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
+import com.example.demo.serviceutility.MyServiceException;
+import com.example.demo.serviceutility.MyServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMessage;
 import org.springframework.stereotype.Service;
@@ -55,24 +57,41 @@ public class PersonService {
         return null;
     }
 
-    public String getNameByChar(String letter){
-
+    public MyServiceResponse<String> getNameByChar(String letter){
         List<Person> personReturn;
-        String stringReturn ="";
+        MyServiceResponse<String> serviceResponse = new MyServiceResponse<String>();
 
         try{
-            if(!letter.matches("[a-z | A-Z]")) throw new Exception("input non valid");
+            if(!letter.matches("[a-z | A-Z]")){
+                throw new MyServiceException( "NotValidLetter" );
+            }
 
             personReturn = personRepository.findByNameStartsWithIgnoreCase(letter);
+            if( personReturn.isEmpty() ){
+                throw new MyServiceException( "personReturnIsEmpty" );
+            }
 
-            if( personReturn.isEmpty() )throw new Exception("nessun risultato trovato");
-
-            for( Person p : personReturn) stringReturn+= p.getName() +",";
+            if( true ){
+                serviceResponse.body = "";
+                for (Person p : personReturn) serviceResponse.body += p.getName() + ",";
+                throw new MyServiceException( "default" );
+            }
 
         }catch (Exception e){
-            return e.getMessage();
+            switch (e.getMessage()){
+                case "NotValidLetter":
+                    serviceResponse.codHttp = 404;
+                    serviceResponse.body = "input non valido";
+                    break;
+                case "personReturnIsEmpty":
+                    serviceResponse.codHttp = 400;
+                    serviceResponse.body = "nessun risultato trovato";
+                    break;
+                default:
+                    serviceResponse.codHttp = 200;
+                    break;
+            }
         }
-
-        return stringReturn.substring(0 ,stringReturn.length() -1);
+        return serviceResponse;
     }
 }

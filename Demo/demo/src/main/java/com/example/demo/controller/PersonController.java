@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Job;
 import com.example.demo.model.Person;
 import com.example.demo.service.PersonService;
+import com.example.demo.serviceutility.MyServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,18 +37,8 @@ public class PersonController {
 
     @GetMapping("{letter}")
     public ResponseEntity<String> getNameByChar (@PathVariable("letter") String letter){
-        String message = personService.getNameByChar( letter );
-
-        switch ( message ){
-            case "input non valido" :
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( message );
-
-            case "nessun risultato trovato":
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body( message );
-
-            default:
-                return ResponseEntity.status(HttpStatus.OK).body(message);
-        }
+        MyServiceResponse<String> serviceResponse = personService.getNameByChar( letter );
+        return ResponseEntity.status( serviceResponse.codHttp ).body( serviceResponse.body );
     }
 
     // --- METHODS POST ------------------------------------------------------------------------------
