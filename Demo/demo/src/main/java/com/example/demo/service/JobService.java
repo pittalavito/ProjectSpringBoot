@@ -18,7 +18,7 @@ public class JobService {
 
     // --- METHODS --------------------------------------------------
     public List<Job> getAllJobS() {
-        return jobRepository.findAll();
+        return  jobRepository.findAll();
     }
 
     public boolean insertJob( String name ){
@@ -55,4 +55,5 @@ public class JobService {
         jobRepository.save( job );
         return true;
     }
+
 }

@@ -14,6 +14,10 @@ public class Job {
     @OneToMany(mappedBy = "job")
 
     private Set<Person> persons;
+    @PreRemove
+    private void preRemove() {
+        persons.forEach( person -> person.setJob(null));
+    }
 
     // --- CONSTRUCTOR --------------------------------------------------
     public Job() {

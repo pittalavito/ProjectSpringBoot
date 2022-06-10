@@ -2,12 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Job;
 import com.example.demo.model.Person;
+import com.example.demo.myMenagementException.MyHttpException;
 import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 

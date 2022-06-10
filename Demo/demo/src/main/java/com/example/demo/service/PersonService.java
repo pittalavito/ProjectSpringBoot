@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +64,7 @@ public class PersonService {
 
         if (!letter.matches("[a-z | A-Z]")) {
             throw new MyHttpException("input non valido" , HttpStatus.BAD_REQUEST);
+            //throw new HttpClientErrorException( HttpStatus.BAD_REQUEST , "message");
         }
 
         personReturn = personRepository.findByNameStartsWithIgnoreCase(letter);

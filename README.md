@@ -1,2 +1,2 @@
 #ProjectSpringBoot
-	- es 2 , 3 , 4 , 5
+	-completamento esercio 6 per come si deve

@@ -1,8 +1,6 @@
 package com.example.demo.myMenagementException;
 
-import org.springframework.http.HttpStatus;
-
-public class ErrorMessage <T>{
+public class ErrorMessage {
     private final String msg;
     private final int statusCode;
 
